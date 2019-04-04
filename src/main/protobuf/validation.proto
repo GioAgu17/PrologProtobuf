@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+service PrologValidation {
+    rpc addFactNode (Node) returns (Response) {}
+    rpc validateExtension (Extend) returns (Response) {}
+    rpc validateMethodSign (MethodSign) returns (Response) {}
+    rpc validateConstructorSign (ConstrSign) returns (Response) {}
+    rpc validateThisInvocation (ThisInvocation) returns (Response) {}
+    rpc validateUseRetStmt (UseRetStmt) returns (Response) {}
+    rpc validateRetStmt (RetStmt) returns (Response) {}
+    rpc validateSuperInvocation (SuperInvocation) returns (Response) {}
+    rpc validateMethodInvocation (MethodInvocation) returns (Response) {}
+    rpc validateClassInstanceCreation (ClassCreation) returns (Response) {}
+    rpc validateVariableInitialization (VariableInitialization) returns (Response){}
+    rpc addType (Type) returns (Response) {}
+    rpc getType (Type) returns (TypeResponse) {}
+}
+
+message Node{
+    string description =1;
+    int32 id = 2;
+    int32 par_id = 3;
+    int32 depth = 4;
+}
+
+message Extend{
+    string typeName = 1;
+    string superName = 2;
+}
+
+message MethodSign{
+    string name = 1;
+    string className = 2;
+    string returnType = 3;
+    string paramLst = 4;
+    int32 id = 5;
+}
+
+message ConstrSign{
+    string name =1;
+    int32 id =2;
+    string params =3;
+}
+
+message ThisInvocation{
+    string paramLst =1;
+    int32 id =2;
+    int32 depth =3;
+}
+message MethodInvocation{
+    string name = 1;
+    string class = 2;
+    string args = 3;
+}
+message ClassCreation{
+    string class = 1;
+    string args = 2;
+}
+message UseRetStmt{
+    string retType =1;
+    int32 id = 2;
+    int32 depth =3;
+}
+
+message RetStmt{
+    string methodName =1;
+}
+message VariableInitialization{
+    string expectedType = 1;
+    string actualType = 2;
+}
+message SuperInvocation{
+    string paramLst = 1;
+    int32 parId = 2;
+    int32 depth = 3;
+}
+
+message Type{
+    string type = 1;
+    int32 id = 2;
+}
+message TypeResponse{
+    string type =1;
+}
+
+message Response{
+    bool value = 1;
+}
